@@ -5,7 +5,7 @@ The main goal of this project is work with large amount of data inside on Reacti
 
 ## Why build it ?
 
-At Reactioon we need to work with large amount of data (>50GB) in seconds to make predictions, and we need flexibility to create/upgrade our solutions. Actually Reactioon use 3 types of Databases (Elasticsearch, MySQL and MongoDB) and files to store data, all of these have a lot of benefits that increase speed and stability of reactioon, but in some cases, the things can be terrible. So, we search for alternatives that can offer the benefits inside of these apps in a lightweight and easy distribution solution (mongo is fast, but not easy to scale/distribute). To create an pattern for development of reactioon tools, we choose create an new data layer called `RDATA`.
+At Reactioon we need to work with large amount of data (~50GB) in seconds to make predictions, and we need flexibility to create/upgrade our solutions. Actually Reactioon use 3 types of Databases (Elasticsearch, MySQL and MongoDB) and files to store data, all of these have a lot of benefits that increase speed and stability of reactioon, but in some cases, the things can be terrible. So, we search for alternatives that can offer the benefits inside of these apps in a lightweight and easy distribution solution (mongo is fast, but not easy to scale/distribute). To create an pattern for development of reactioon tools, we choose create an new data layer called `RDATA`.
 
 ## How it works ?
 
@@ -44,7 +44,7 @@ You can found the full list of available endpoints [here]().
 RDATA has support only to Go lang. If you want support in more languages, check out the Go library and create your own library.
 
 ## Features
-* **Standalone, Easy-distribution, Lightweight and FAST**  
+* **Ready-to-Use, Easy-distribution, Lightweight and FAST**  
 RDATA is projected to be fast, very fast with minimal setup and support heavy work loads.
 
 * **Multi-model data store**  
@@ -60,7 +60,7 @@ When the data changes, the order of an record do not change.
 Internal revisions of an document show how much times the data changes.
 
 * **Indexes Support**  
-Indexes support to improve search results and resources when works with large amount of data.
+Indexes improve search results and resources when works with large amount of data.
 
 * **Shared variables**  
 Support to work with the same key-value from multiples locations.
