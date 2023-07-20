@@ -1,0 +1,676 @@
+{
+	"info": {
+		"_postman_id": "06e294d4-86c3-4775-8c0c-d8c968ed150b",
+		"name": "rdata (dev)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25930945"
+	},
+	"item": [
+		{
+			"name": "Greetings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Core / Metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Collection / Metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Collection / Logs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_logs",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Books / Metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/users",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Variables",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_variables",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_variables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- LIst / Core",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_variables/_core",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_variables",
+						"_core"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- LIst / Collection",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_variables",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_variables"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Get",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_variables/_get?var=@x.keys_qty&meta=1",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_variables",
+						"_get"
+					],
+					"query": [
+						{
+							"key": "var",
+							"value": "@x.keys_qty"
+						},
+						{
+							"key": "meta",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Set",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_variables/_set?var=credits&val=3",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_variables",
+						"_set"
+					],
+					"query": [
+						{
+							"key": "var",
+							"value": "credits"
+						},
+						{
+							"key": "val",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Indexes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_indexes",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_indexes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- New",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_indexes/_new?book=users&index=teste",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_indexes",
+						"_new"
+					],
+					"query": [
+						{
+							"key": "book",
+							"value": "users"
+						},
+						{
+							"key": "index",
+							"value": "teste"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Build",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_indexes/_build?book=users&index=friends.0.age",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_indexes",
+						"_build"
+					],
+					"query": [
+						{
+							"key": "book",
+							"value": "users"
+						},
+						{
+							"key": "index",
+							"value": "friends.0.age"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Queue",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_indexes/_queue",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_indexes",
+						"_queue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Books",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/_books",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"_books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Documents / Insert",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "teste123",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "blablabla",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/users/_docs/_insert",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"users",
+						"_docs",
+						"_insert"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "meta",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Documents / Update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "teste123",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "blablabla2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/users/_docs/_update",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"users",
+						"_docs",
+						"_update"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "meta",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Documents / Delete",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "teste123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/users/_docs/_delete",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"users",
+						"_docs",
+						"_delete"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "meta",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Documents / List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/users/_docs/?limit=1&meta=1",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"users",
+						"_docs",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1"
+						},
+						{
+							"key": "meta",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Documents / Get",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"_key\", \"1a41c839-62c1-40e0-8307-23100c593a82\")"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/users/_docs/_get/{{_key}}?meta=1",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"users",
+						"_docs",
+						"_get",
+						"{{_key}}"
+					],
+					"query": [
+						{
+							"key": "meta",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "- Documents / Search",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{protocol}}://{{host}}:{{port}}/rdata/test/users/_docs/_search?field=friends.0.age&condition=equal&value=44&limit=5&meta=1",
+					"protocol": "{{protocol}}",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"rdata",
+						"test",
+						"users",
+						"_docs",
+						"_search"
+					],
+					"query": [
+						{
+							"key": "field",
+							"value": "friends.0.age"
+						},
+						{
+							"key": "condition",
+							"value": "equal"
+						},
+						{
+							"key": "value",
+							"value": "44"
+						},
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "meta",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "protocol",
+			"value": "https",
+			"type": "string"
+		},
+		{
+			"key": "host",
+			"value": "192.168.1.202",
+			"type": "string"
+		},
+		{
+			"key": "port",
+			"value": "60162",
+			"type": "string"
+		},
+		{
+			"key": "document_key",
+			"value": ""
+		},
+		{
+			"key": "key",
+			"value": ""
+		},
+		{
+			"key": "_key",
+			"value": ""
+		}
+	]
+}
