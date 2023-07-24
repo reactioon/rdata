@@ -75,7 +75,7 @@ RDATA has some other useful features like Logs, REST API, Connection Pool, ACL (
 The install a server node is easy, see the full command below:
 
 ```sh
-./rdata -install
+./rdata-server -install
 ```
 
 After execute the command, options will be asked to fill or you can use the default values.
@@ -112,7 +112,7 @@ When the installer is working, the folder base will be created and a copy of thi
 The start a server node run the RDATA with `-run-server` flag, see the full command below:
 
 ```sh
-./rdata -run-server
+./rdata-server -run-server
 ```
 
 **Note:** When it's running the server-client will be started a can be open on browser. Check the list of endpoints below.
@@ -570,7 +570,7 @@ To test the data layer, we can populate the node with some data to see how it wo
 **@Note:** Don't worry about the data, you can delete the data folder and start again.
 
 ```sh
-./rdata -run-test -populate -qty=10
+./rdata-server -run-test -populate -qty=10
 ```
 
 With the command above we will populate the database with 10 records, to do stress test we can use a large amount os records.
@@ -649,7 +649,7 @@ The current version of RDATA is open and free to use to anyone, and can be used 
 
 ## Next steps
 
-* TCP & WebSocket
+* WebSocket
 * Transactions
 * Filters
 * Group & Order
