@@ -1,7 +1,7 @@
 # RDATA
 RDATA is a Data Layer that aim to be lightweight, fast, distributed and scalable. 
 
-The main goal of this project is work with large amount of data inside on Reactioon services/tools. But on reactioon ecossystem the users can create their own tools, and on this tool, can create anything.
+The main goal of this project is work with large amount of data inside on Reactioon services/tools. But on reactioon ecossystem the users can create their own tools, and on RDATA, can create anything.
 
 ## Why build it ?
 
@@ -59,6 +59,9 @@ When the data changes, the order of a record do not change.
 * **Content Revision**  
 Internal revisions of a document show how much times the data changes.
 
+* **Data schema**  
+Support to create an pattern for the documents inside of an book. 
+
 * **Indexes Support**  
 Indexes improve search results and resources when works with large amount of data.
 
@@ -67,6 +70,9 @@ Support to work with the same key-value from multiples locations.
 
 * **Dynamic variables**  
 Support to work with a key-value dynamically increasing or decreasing their value. (like redis, increase/decrease a number)
+
+* **Search and Filters**  
+Support to work with the same key-value from multiples locations.
 
 RDATA has some other useful features like Logs, REST API, Connection Pool, ACL (Whitelist) and much more.
 
@@ -107,20 +113,37 @@ When the installer is working, the folder base will be created and a copy of thi
 
 **(2):** `Location` is where your RDATA version will be saved, inside of it has a folder called data, inside of this folder you have the whole collection data.
 
-## Run
+## Server
 
-The start a server node run the RDATA with `-run-server` flag, see the full command below:
+To start a server node run the RDATA with `-run-server` flag, see the full command below:
 
 ```sh
 ./rdata-server -run-server
 ```
 
-**Note:** When it's running the server-client will be started a can be open on browser. Check the list of endpoints below.
+**Note:** When the server is running the node will be started and open an tcp connection to the address and port, this will be used for the client.
+
+### Client
+
+To easy explore the whole features of rdata we build an client, so you can connect an node (local or remote) using the client.
+
+```
+./rdata-client -host={ip} -port={port}
+```
+
+### API
+
+To easy share data over network for users that have an browser engine, you can use the node of API to create endpoints that will be available with HTTP protocol.
+
+```
+./rdata-api -run-api
+```
+**@Note:** the API node only can be used when server is running.
+
 
 ### Postman
 
-To easy explore the features inside of RDATA, a collection of methods are available to Postman. So, you only import it and it's done, you can explore all options.
-
+To easy explore the HTTP features inside of RDATA, a collection of HTTP/HTTPS methods are available to Postman when API is running. So, after start the API of your node, you only import it and it's done, you can explore all options.
 
 **@Note:** the Postman collectioon will be updated when new resources is added. So, remember to check it regularly.
 
@@ -128,9 +151,15 @@ To easy explore the features inside of RDATA, a collection of methods are availa
 
 All communications with RDATA are performed using the HTTP protocol, whether to obtain a document, save or update.
 
-
 #### Core / Home
 
+Client:
+```
+./rdata-client -host={ip} -port={port}
+```
+**@Note:** if the client connects, it's working.
+
+API:
 ```
 curl --location 'http://{host}:{port}'
 ```
@@ -145,6 +174,12 @@ curl --location 'http://{host}:{port}'
 #### Core / Metrics  
 **Endpoint (GET):** /rdata
 
+Client:
+```
+RDATA> info .
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata'
 ```
@@ -170,6 +205,12 @@ curl --location 'https://{host}:{port}/rdata'
 #### Collection / Metrics
 **Endpoint (GET):** /rdata/`{collection}`
 
+Client:
+```
+RDATA> info test
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/test'
 ```
@@ -223,6 +264,12 @@ curl --location 'https://{host}:{port}/rdata/test'
 #### Books / Metrics
 **Endpoint (GET):** /rdata/`{collection}`/`{book}`/_metrics
 
+Client:
+```
+RDATA> info test/users
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/users'
 ```
@@ -244,6 +291,12 @@ curl --location 'https://{host}:{port}/rdata/test/users'
 ### Documents / `Get`
 **Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_get/`{document}`
 
+Client:
+```
+RDATA> docs.get test/users key=1a41c839-62c1-40e0-8307-23100c593a82&meta=1
+```
+
+API:
 ```json
 {
     "_timestamp": "2023-07-18 20:24:13",
@@ -261,6 +314,12 @@ curl --location 'https://{host}:{port}/rdata/test/users'
 ### Documents / `Insert`
 **Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_insert
 
+Client:
+```
+RDATA> docs.insert test/users key=teste123&value=blablabla
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_insert' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
@@ -283,6 +342,11 @@ curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_insert' 
 
 ### Documents / `Update`
 **Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_update
+
+Client:
+```
+RDATA> docs.update test/users key=teste123&value=blablabla2
+```
 
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_update' \
@@ -307,6 +371,12 @@ curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_update' 
 ### Documents / `Delete`
 **Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_delete
 
+Client:
+```
+RDATA> docs.delete test/users key=teste1234
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_delete' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
@@ -329,6 +399,12 @@ curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_delete' 
 ## List
 List is a easy way to get a list of documents inside of a book, and the data returned will stay in the order that they are added. So when the data changes the list still the same.
 
+Client:
+```
+RDATA> docs.list test/users limit=1&meta=1
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/users/_docs/?limit=1&meta=1'
 ```
@@ -361,6 +437,12 @@ curl --location 'https://{host}:{port}/rdata/test/users/_docs/?limit=1&meta=1'
 
 Inside of reactioon the data are temporary or persistent, to work with these scenarios inside a collection of books has a group of documents called `variables` that can be used as a temporary/persistent storage. The content of a variable can be accessed from multiples locations without lacking. So, to improve the performance of your solution, the variables can be used to be a fast way to distribute data inside of a application like config settings.
 
+Client:
+```
+RDATA> variables test meta=1
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/_variables'
 ```
@@ -394,6 +476,12 @@ RDATA supports indexes to improve performance when searching for a document. Cur
 
 **Endpoint (GET)**: /rdata/`{collection}`/_indexes
 
+Client:
+```
+RDATA> indexes test
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/_indexes'
 ```
@@ -421,6 +509,12 @@ curl --location 'https://{host}:{port}/rdata/test/_indexes'
 
 #### Create Index
 
+Client:
+```
+RDATA> indexes.create test/users index=teste
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/_indexes/_new?book=users&index=teste'
 ```
@@ -436,6 +530,12 @@ curl --location 'https://{host}:{port}/rdata/{collection}/_indexes/_new?book=use
 #### Build Index
 After creating the index the contents of the index must be constructed, then the construction must be communicated, and then the indexing will begin.
 
+Client:
+```
+RDATA> indexes.build test/users index=teste
+```
+
+API:
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/_indexes/_build?book=users&index=friends.age'
 ```
@@ -467,8 +567,14 @@ Search endpoint has a aditional number of fields to determine what is the contex
 | limit    | 0-N | Number of records to search    |
 | meta    | 1 or 0 | Aditional details of the document called 'meta'. 1=enabled,0=disabled    |
 
+Client:
+```
+RDATA> docs.search test/users field=name&condition=equal&value=jose&limit=1&meta=1
+```
+
+API:
 ```sh
-curl --location 'https://{host}:{port}/rdata/test/users/_docs/_search?field=friends.0.age&condition=equal&value=44&limit=5&meta=1'
+curl --location 'https://{host}:{port}/rdata/test/users/_docs/_search?field=name&condition=equal&value=jose&limit=1&meta=1'
 ```
 
 ```json
@@ -507,6 +613,12 @@ curl --location 'https://{host}:{port}/rdata/test/users/_docs/_search?field=frie
 ## Logs
 RDATA has support for log operations, you can disable or custom logs inside of settings file (rdata.yaml).
 
+Client:
+```
+RDATA> logs
+```
+
+API:
 ```json
 {
     "_timestamp": "2023-07-18 18:10:25",
@@ -582,42 +694,42 @@ Looped test is a way to do stress test of a node without intervention. So, you c
 **1. Read variables**
 
 ```
-./rdata -run-test -loop -variables-read
+./rdata-server -run-test -loop -variables-read
 ```
 This test will perform read of a variable each times.
 
 **3. Variable increase**
 
 ```
-./rdata -run-test -loop -variables-increase
+./rdata-server -run-test -loop -variables-increase
 ```
 This test will perform read of a variable each times.
 
 **4. Variable decrease**
 
 ```
-./rdata -run-test -loop -variables-decrease
+./rdata-server -run-test -loop -variables-decrease
 ```
 This test will perform read of a variable each times.
 
 **5. Insert X documents inside of a book**
 
 ```
-./rdata -run-test -loop -documents-insert -qty=10
+./rdata-server -run-test -loop -documents-insert -qty=10
 ```
 **Note:** If the book don't exists, they will be created automatically.
 
 **6. Get the last X documents and Update**
 
 ```
-./rdata -run-test -loop -documents-update -qty=10
+./rdata-server -run-test -loop -documents-update -qty=10
 ```
 **Note:** The changes can be checked looking the `revision` of document.
 
 **6. Get the last X documents and Delete**
 
 ```
-./rdata -run-test -loop -documents-delete -qty=10
+./rdata-server -run-test -loop -documents-delete -qty=10
 ```
 **Note:** The changes can be checked looking the `revision` of document.
 
@@ -651,7 +763,6 @@ The current version of RDATA is open and free to use to anyone, and can be used 
 
 * WebSocket
 * Transactions
-* Filters
 * Group & Order
 * Live Events
 
