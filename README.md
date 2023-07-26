@@ -1,5 +1,5 @@
 # RDATA
-RDATA is a Data Layer that aim to be lightweight, fast, distributed and scalable. 
+RDATA is a Data Layer that aim to be lightweight, fast, distributable and scalable. 
 
 The main goal of this project is work with large amount of data inside on Reactioon services/tools. But on reactioon ecossystem the users can create their own tools, and on RDATA, can create anything.
 
@@ -9,7 +9,7 @@ At Reactioon we need to work with large amount of data (~50GB) in seconds to mak
 
 ## How it works ?
 
-RDATA is based on `LevelDB`, so we are talking about a KVS (Key-Value-Store) that store the data inside of a specific location using hash table as reference to the data, and avoid random access. the kvs concept don't have server-client to access the data, because it is standalone. So, we create our own server-client around of it. The data inside of a node can be accessed over network using HTTP for multiple requests without locking. LevelDB only grown in a vertical way, with RDATA, we grow horizontally with multiples databases shared in the same machine or over network.
+RDATA is based on `LevelDB`, so we are talking about a KVS (Key-Value-Store) that store the data inside of a specific location using hash table as reference to the data, and avoid random access. The KVS concept of `LevelDB` don't have server-client to access the data, because it is standalone. So, we create our own server-client around of it. The data inside of a node can be accessed over network using HTTP for multiple requests without locking. LevelDB only grown in a vertical way, with RDATA the growth will be  horizontally with multiples databases shared in the same machine or over network.
 
 ## KVS
 
@@ -23,7 +23,7 @@ Our focus is not create a KVS, but a storage layer that can work as database to 
 * 256MB RAM
 * Linux Debian 11 / OSX Ventura
 
-**Note:** I've tested with debian and osx, you can check if works fine on other distros.
+**Note:** I've tested with Debian and OSX, you can check if works fine on other distros.
 
 ## Concept
 
@@ -35,9 +35,7 @@ COLLECTION (aka, Database) -----> BOOKS (aka, TABLE) -----> DOCUMENTS (aka, RECO
 
 ## Usage
 
-RDATA is projected to be easy to install and use. all common operations can be made with an http request in the server API, passing the right arguments to desired method you will get a return of request.
-
-You can found the full list of available endpoints [here]().
+RDATA is projected to be easy to install and use. all common operations can be made with a tcp/http request in the server API, passing the right arguments to desired method you will get a return of request.
 
 ## Library
 
@@ -62,8 +60,11 @@ Internal revisions of a document show how much times the data changes.
 * **Data schema**  
 Support to create an pattern for the documents inside of an book. 
 
+* **Nested data**  
+Support to create documents with nested data, this mean an info inside of other. Not only, Key-Value, but Key:[ Value:[ Value: [ Value ] ]].
+
 * **Indexes Support**  
-Indexes improve search results and resources when works with large amount of data.
+Indexes improve search results and resources when works with large amount of data or nested data.
 
 * **Shared variables**  
 Support to work with the same key-value from multiples locations.
@@ -72,7 +73,7 @@ Support to work with the same key-value from multiples locations.
 Support to work with a key-value dynamically increasing or decreasing their value. (like redis, increase/decrease a number)
 
 * **Search and Filters**  
-Support to work with the same key-value from multiples locations.
+Support to search and filter data using logical operators ( `=` , `>` , `<` , `>=` , `<=` ).
 
 RDATA has some other useful features like Logs, REST API, Connection Pool, ACL (Whitelist) and much more.
 
@@ -113,6 +114,8 @@ When the installer is working, the folder base will be created and a copy of thi
 
 **(2):** `Location` is where your RDATA version will be saved, inside of it has a folder called data, inside of this folder you have the whole collection data.
 
+**(3):** If you want more details about what the installer do, check the file `install.md`.
+
 ## Server
 
 To start a server node run the RDATA with `-run-server` flag, see the full command below:
@@ -121,7 +124,7 @@ To start a server node run the RDATA with `-run-server` flag, see the full comma
 ./rdata-server -run-server
 ```
 
-**Note:** When the server is running the node will be started and open an tcp connection to the address and port, this will be used for the client.
+**Note:** When the server is running the node will be started and open an TCP connection to the address and port, this will be used for the client.
 
 ### Client
 
@@ -138,18 +141,17 @@ To easy share data over network for users that have an browser engine, you can u
 ```
 ./rdata-api -run-api
 ```
-**@Note:** the API node only can be used when server is running.
-
+**@Note:** the API node only can be used when server instance is running.
 
 ### Postman
 
-To easy explore the HTTP features inside of RDATA, a collection of HTTP/HTTPS methods are available to Postman when API is running. So, after start the API of your node, you only import it and it's done, you can explore all options.
+To easy explore the HTTP features inside of RDATA, a collection of HTTP/HTTPS methods are available to Postman when API is running. So, after start the API of your node, you only import the `postman.json` it and it's done, you can explore all options.
 
 **@Note:** the Postman collectioon will be updated when new resources is added. So, remember to check it regularly.
 
 ## Endpoints
 
-All communications with RDATA are performed using the HTTP protocol, whether to obtain a document, save or update.
+All communications with RDATA are performed using the TCP (Client/Library) / HTTP (API) protocol, whether to obtain a document, save or update.
 
 #### Core / Home
 
@@ -203,7 +205,6 @@ curl --location 'https://{host}:{port}/rdata'
 ```  
 
 #### Collection / Metrics
-**Endpoint (GET):** /rdata/`{collection}`
 
 Client:
 ```
@@ -211,6 +212,9 @@ RDATA> info test
 ```
 
 API:
+
+**Endpoint (GET):** /rdata/`{collection}`
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/test'
 ```
@@ -262,7 +266,6 @@ curl --location 'https://{host}:{port}/rdata/test'
 ```
 
 #### Books / Metrics
-**Endpoint (GET):** /rdata/`{collection}`/`{book}`/_metrics
 
 Client:
 ```
@@ -270,6 +273,9 @@ RDATA> info test/users
 ```
 
 API:
+
+**Endpoint (GET):** /rdata/`{collection}`/`{book}`/_metrics
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/users'
 ```
@@ -289,7 +295,6 @@ curl --location 'https://{host}:{port}/rdata/test/users'
 ## Basic Operations `( GET | INSERT | UPDATE | DELETE )`
 
 ### Documents / `Get`
-**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_get/`{document}`
 
 Client:
 ```
@@ -297,6 +302,9 @@ RDATA> docs.get test/users key=1a41c839-62c1-40e0-8307-23100c593a82&meta=1
 ```
 
 API:
+
+**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_get/`{document}`
+
 ```json
 {
     "_timestamp": "2023-07-18 20:24:13",
@@ -312,7 +320,6 @@ API:
 ```
 
 ### Documents / `Insert`
-**Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_insert
 
 Client:
 ```
@@ -320,6 +327,9 @@ RDATA> docs.insert test/users key=teste123&value=blablabla
 ```
 
 API:
+
+**Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_insert
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_insert' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
@@ -341,12 +351,15 @@ curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_insert' 
 ```
 
 ### Documents / `Update`
-**Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_update
 
 Client:
 ```
 RDATA> docs.update test/users key=teste123&value=blablabla2
 ```
+
+API:
+
+**Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_update
 
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_update' \
@@ -369,7 +382,6 @@ curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_update' 
 ```
 
 ### Documents / `Delete`
-**Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_delete
 
 Client:
 ```
@@ -377,6 +389,9 @@ RDATA> docs.delete test/users key=teste1234
 ```
 
 API:
+
+**Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_delete
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/{book}/_docs/_delete' \
 --header 'Content-Type: application/x-www-form-urlencoded' \
@@ -433,7 +448,6 @@ curl --location 'https://{host}:{port}/rdata/test/users/_docs/?limit=1&meta=1'
 ## Advanced resources
 
 ### Variables
-**Endpoint (GET)**: /rdata/`{collection}`/_vars
 
 Inside of reactioon the data are temporary or persistent, to work with these scenarios inside a collection of books has a group of documents called `variables` that can be used as a temporary/persistent storage. The content of a variable can be accessed from multiples locations without lacking. So, to improve the performance of your solution, the variables can be used to be a fast way to distribute data inside of a application like config settings.
 
@@ -443,6 +457,9 @@ RDATA> variables test meta=1
 ```
 
 API:
+
+**Endpoint (GET)**: /rdata/`{collection}`/_vars
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/_variables'
 ```
@@ -469,12 +486,9 @@ curl --location 'https://{host}:{port}/rdata/{collection}/_variables'
     }
 }
 ```
-More details about VARIABLES, can be found in [VARIABLES]() file.
 
 ### Indexes
-RDATA supports indexes to improve performance when searching for a document. Currently, the content to be indexed must be in JSON, if the content stored in the book is in JSON, it can be indexed and the document will be available with `_search`.
-
-**Endpoint (GET)**: /rdata/`{collection}`/_indexes
+RDATA supports indexes to improve performance while searching for a document. Currently, the content to be indexed must be in JSON, if the content stored in the book is in JSON, it can be indexed and the document will be available with `_search`.
 
 Client:
 ```
@@ -482,6 +496,9 @@ RDATA> indexes test
 ```
 
 API:
+
+**Endpoint (GET)**: /rdata/`{collection}`/_indexes
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/_indexes'
 ```
@@ -515,6 +532,7 @@ RDATA> indexes.create test/users index=teste
 ```
 
 API:
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/{collection}/_indexes/_new?book=users&index=teste'
 ```
@@ -553,7 +571,6 @@ curl --location 'https://{host}:{port}/rdata/test/_indexes/_build?book=users&ind
 RDATA has resources to create a way search documents very fast, but the search only works with indexed fields for structured documents like JSON.
 
 #### Documents / Search
-**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_docs/_search?field=`{field}`&condition=`{condition}`&value=`{value}`&limit=`{limit}`&meta=`{meta}`
 
 Search endpoint has a aditional number of fields to determine what is the context of the search. check the details below:
 
@@ -573,6 +590,9 @@ RDATA> docs.search test/users field=name&condition=equal&value=jose&limit=1&meta
 ```
 
 API:
+
+**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_docs/_search?field=`{field}`&condition=`{condition}`&value=`{value}`&limit=`{limit}`&meta=`{meta}`
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/users/_docs/_search?field=name&condition=equal&value=jose&limit=1&meta=1'
 ```
@@ -757,7 +777,7 @@ Data science needs to work with large amount of data to make predictions, RDATA 
 
 The usage of the RDATA is restricted to reactioon users, so the user needs a reactioon account and RTN to use it inside of their project.
 
-The current version of RDATA is open and free to use to anyone, and can be used until 12/28/2023, after which the software will expire and stop. After that, the user must upgrade to the next version.
+The current version of RDATA is open and free to test, in the future newest versions will be available only with a license that will be payed with RTN.
 
 ## Next steps
 
@@ -765,6 +785,7 @@ The current version of RDATA is open and free to use to anyone, and can be used 
 * Transactions
 * Group & Order
 * Live Events
+* ACL / User roles
 
 ## Considerations
 
