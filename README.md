@@ -420,11 +420,13 @@ RDATA> docs.list test/users limit=1&meta=1
 ```
 
 API:
+**Endpoint (POST)**: /rdata/`{collection}`/`{book}`/_docs
+
 ```sh
 curl --location 'https://{host}:{port}/rdata/test/users/_docs/?limit=1&meta=1'
 ```
 
-```
+```json
 {
     "_timestamp": "2023-07-20 14:50:46",
     "book": "users",
@@ -457,7 +459,6 @@ RDATA> variables test meta=1
 ```
 
 API:
-
 **Endpoint (GET)**: /rdata/`{collection}`/_vars
 
 ```sh
@@ -496,7 +497,6 @@ RDATA> indexes test
 ```
 
 API:
-
 **Endpoint (GET)**: /rdata/`{collection}`/_indexes
 
 ```sh
@@ -567,11 +567,9 @@ curl --location 'https://{host}:{port}/rdata/test/_indexes/_build?book=users&ind
 ```
 
 ## Search
-
 RDATA has resources to create a way search documents very fast, but the search only works with indexed fields for structured documents like JSON.
 
 #### Documents / Search
-
 Search endpoint has a aditional number of fields to determine what is the context of the search. check the details below:
 
 | Param    | Values | Details |
@@ -590,7 +588,6 @@ RDATA> docs.search test/users field=name&condition=equal&value=jose&limit=1&meta
 ```
 
 API:
-
 **Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_docs/_search?field=`{field}`&condition=`{condition}`&value=`{value}`&limit=`{limit}`&meta=`{meta}`
 
 ```sh
@@ -625,6 +622,86 @@ curl --location 'https://{host}:{port}/rdata/test/users/_docs/_search?field=name
                 "_timestamp": "2023-07-18 18:21:07"
             },
             ...
+        ]
+    }
+}
+```
+
+## Filters
+RDATA has resources to search documents with logical operators and multiples conditions. The search of documents based on filters has performance improved when a book has indexes.
+
+
+| Param    | Values | Details |
+| -------- | ------- | ------- |
+| collection  | * | collection name    |
+| book  | * | book name    |
+| filter  | * | filter query with logical operators.    |
+| limit    | 0-N | Number of records to search    |
+| meta    | 1 or 0 | Aditional details of the document called 'meta'. 1=enabled,0=disabled    |
+
+Client:
+```
+RDATA> docs.filter test/users filter=(age=37)&limit=1
+```
+
+API:
+**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_docs/_filter_?filter=`{query-filter}`&limit=`{limit}`&meta=`{meta}`
+
+```sh
+curl --location 'https://{host}:{port}/rdata/test/users/_docs/_filter_?filter=(age=37)&limit=1&meta=1'
+```
+
+```json
+{
+    "_time_elapsed": "1.875793ms",
+    "_time_now": "2023-07-27 01:59:08",
+    "book": "users",
+    "documents": {
+        "_length": 1,
+        "list": [
+            {
+                "age": 37,
+                "children": [
+                    "Sara",
+                    "Alex",
+                    "Jack"
+                ],
+                "fav.movie": "Deer Hunter",
+                "friends": [
+                    {
+                        "age": 44,
+                        "first": "Dale",
+                        "last": "Murphy",
+                        "nets": [
+                            "ig",
+                            "fb",
+                            "tw"
+                        ]
+                    },
+                    {
+                        "age": 68,
+                        "first": "Roger",
+                        "last": "Craig",
+                        "nets": [
+                            "fb",
+                            "tw"
+                        ]
+                    },
+                    {
+                        "age": 47,
+                        "first": "Jane",
+                        "last": "Murphy",
+                        "nets": [
+                            "ig",
+                            "tw"
+                        ]
+                    }
+                ],
+                "name": {
+                    "first": "Tom",
+                    "last": "Anderson"
+                }
+            }
         ]
     }
 }
