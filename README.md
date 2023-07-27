@@ -645,10 +645,10 @@ RDATA> docs.filter test/users filter=(age=37)&limit=1
 ```
 
 API:
-**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_docs/_filter_?filter=`{query-filter}`&limit=`{limit}`&meta=`{meta}`
+**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_docs/_filter?filter=`{query-filter}`&limit=`{limit}`&meta=`{meta}`
 
 ```sh
-curl --location 'https://{host}:{port}/rdata/test/users/_docs/_filter_?filter=(age=37)&limit=1&meta=1'
+curl --location 'https://{host}:{port}/rdata/test/users/_docs/_filter?filter=(age=37)&limit=1&meta=1'
 ```
 
 ```json
