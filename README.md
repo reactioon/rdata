@@ -75,7 +75,7 @@ Support to work with a key-value dynamically increasing or decreasing their valu
 * **Search and Filters**  
 Support to search and filter data using logical operators ( `=` , `>` , `<` , `>=` , `<=` ).
 
-* **Desktop Client**
+* **Desktop Client**  
 RDATA has GUI applications for Linux (Debian) and Mac (Ventura). Check the builds folder for each system.
 
 RDATA has some other useful features like Logs, REST API, Connection Pool, ACL (Whitelist) and much more.
