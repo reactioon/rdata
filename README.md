@@ -63,9 +63,6 @@ Support to create an pattern for the documents inside of an book.
 * **Nested data**  
 Support to create documents with nested data, this mean an info inside of other. Not only, Key-Value, but Key:[ Value:[ Value: [ Value ] ]].
 
-* **Indexes Support**  
-Indexes improve search results and resources when works with large amount of data or nested data.
-
 * **Shared variables**  
 Support to work with the same key-value from multiples locations.
 
@@ -237,18 +234,6 @@ curl --location 'https://{host}:{port}/rdata/test'
                     "pages": 4
                 }
             ]
-        },
-        "indexes": {
-            "_length": 1,
-            "books": {
-                "users": [
-                    {
-                        "docs": "1",
-                        "index": "friends.0.age",
-                        "location": "./buckets/test/_indexes/users/.friends.0.age"
-                    }
-                ]
-            }
         },
         "variables": {
             "_length": 1,
@@ -449,7 +434,6 @@ curl --location 'https://{host}:{port}/rdata/test/users/_docs/?limit=1&meta=1'
 }
 ```
 
-
 ## Advanced resources
 
 ### Variables
@@ -488,84 +472,6 @@ curl --location 'https://{host}:{port}/rdata/{collection}/_variables'
             },
         ]
     }
-}
-```
-
-### Indexes
-RDATA supports indexes to improve performance while searching for a document. Currently, the content to be indexed must be in JSON, if the content stored in the book is in JSON, it can be indexed and the document will be available with `_search`.
-
-Client:
-```
-RDATA> indexes test
-```
-
-API:
-**Endpoint (GET)**: /rdata/`{collection}`/_indexes
-
-```sh
-curl --location 'https://{host}:{port}/rdata/test/_indexes'
-```
-
-```json
-{
-    "_timestamp": "2023-07-18 18:24:17",
-    "collection": {
-        "location": "./data/test"
-    },
-    "indexes": {
-        "_length": 1,
-        "books": {
-            "users": [
-                {
-                    "docs": "1",
-                    "index": "friends.0.age",
-                    "location": "./data/test/_indexes/users/.friends.0.age"
-                }
-            ]
-        }
-    }
-}
-```
-
-#### Create Index
-
-Client:
-```
-RDATA> indexes.create test/users index=teste
-```
-
-API:
-
-```sh
-curl --location 'https://{host}:{port}/rdata/{collection}/_indexes/_new?book=users&index=teste'
-```
-
-```json
-{
-    "_timestamp": "2023-07-20 05:03:21",
-    "msg": "The index 'teste' has been created on book 'users'.",
-    "status": "success"
-}
-```
-
-#### Build Index
-After creating the index the contents of the index must be constructed, then the construction must be communicated, and then the indexing will begin.
-
-Client:
-```
-RDATA> indexes.build test/users index=teste
-```
-
-API:
-```sh
-curl --location 'https://{host}:{port}/rdata/test/_indexes/_build?book=users&index=friends.age'
-```
-
-```json
-{
-    "_timestamp": "2023-07-20 05:20:54",
-    "msg": "The build of index 'friends.age' will start in a few seconds.",
-    "status": "success"
 }
 ```
 
@@ -631,7 +537,7 @@ curl --location 'https://{host}:{port}/rdata/test/users/_docs/_search?field=name
 ```
 
 ## Filters
-RDATA has resources to search documents with logical operators and multiples conditions. The search of documents based on filters has performance improved when a book has indexes.
+RDATA has resources to search documents with logical operators and multiples conditions. The search of documents based on filters has performance improved with auto indexing.
 
 
 | Param    | Values | Details |
