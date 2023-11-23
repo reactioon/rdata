@@ -475,67 +475,6 @@ curl --location 'https://{host}:{port}/rdata/{collection}/_variables'
 }
 ```
 
-## Search
-RDATA has resources to create a way search documents very fast, but the search only works with indexed fields for structured documents like JSON.
-
-#### Documents / Search
-Search endpoint has a aditional number of fields to determine what is the context of the search. check the details below:
-
-| Param    | Values | Details |
-| -------- | ------- | ------- |
-| collection  | * | collection name    |
-| book  | * | book name    |
-| field  | * | field name in a structured document like json    |
-| condition | equal / contains | equal|contains     |
-| value    | * | the value    |
-| limit    | 0-N | Number of records to search    |
-| meta    | 1 or 0 | Aditional details of the document called 'meta'. 1=enabled,0=disabled    |
-
-Client:
-```
-RDATA> docs.search test/users field=name&condition=equal&value=jose&limit=1&meta=1
-```
-
-API:
-**Endpoint (GET)**: /rdata/`{collection}`/`{book}`/_docs/_search?field=`{field}`&condition=`{condition}`&value=`{value}`&limit=`{limit}`&meta=`{meta}`
-
-```sh
-curl --location 'https://{host}:{port}/rdata/test/users/_docs/_search?field=name&condition=equal&value=jose&limit=1&meta=1'
-```
-
-```json
-{
-    "_timestamp": "2023-07-18 20:24:16",
-    "book": "users",
-    "documents": {
-        "_length": 5,
-        "list": [
-            {
-                "_aid": 7,
-                "_book": "users",
-                "_content": {...},
-                "_content_hash": "",
-                "_content_length": 365,
-                "_key": "teste123",
-                "_revision": 0,
-                "_timestamp": "2023-07-18 18:21:09"
-            },
-            {
-                "_aid": 6,
-                "_book": "users",
-                "_content": {...},
-                "_content_hash": "",
-                "_content_length": 365,
-                "_key": "teste1234",
-                "_revision": 0,
-                "_timestamp": "2023-07-18 18:21:07"
-            },
-            ...
-        ]
-    }
-}
-```
-
 ## Filters
 RDATA has resources to search documents with logical operators and multiples conditions. The search of documents based on filters has performance improved with auto indexing.
 
